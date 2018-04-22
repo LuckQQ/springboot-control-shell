@@ -2,9 +2,16 @@
 CMD=$1
 DEFAULT_APP_NAME=jenkins-test.jar
 APP_NAME=${2-$DEFAULT_APP_NAME}
+APP_COUNT=`ls -l | grep $APP_NAME | wc -l`
 
 if [[ $1 = "" ]]; then
 	echo "请输入具体命令"
+    exit
+fi
+
+if [[ $APP_COUNT == 0 ]]; then
+    echo "请检查$DEFAULT_APP_NAME是否存在"
+    exit
 fi
 
 function status(){
@@ -21,7 +28,7 @@ function start(){
     if [ $count != 0 ];then
         echo "$APP_NAME already run..."
     else
-        nohup java -jar $APP_NAME > /dev/null 2>&1 &
+        nohup java -jar -Dspring.profiles.active=prod $APP_NAME > /dev/null 2>&1 &
         echo "Start $APP_NAME success..."
     fi
 }
