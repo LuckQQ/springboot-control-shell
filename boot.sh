@@ -3,7 +3,7 @@ CMD=$1
 DEFAULT_APP_NAME=jenkins-test.jar
 WORK_DIR=/home/work/yaoning/jenkins
 APP_NAME=${2-$DEFAULT_APP_NAME}
-cd WORK_DIR
+cd $WORK_DIR
 APP_COUNT=`ls -l | grep $APP_NAME | wc -l`
 
 if [[ $1 = "" ]]; then
